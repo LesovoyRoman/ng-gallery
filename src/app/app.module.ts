@@ -9,6 +9,8 @@ import { FooterComponent } from './partials/footer/footer.component';
 import { NavComponent } from './partials/nav/nav.component';
 import { MainComponent } from './partials/main/main.component';
 
+import { AppRoutingModule } from './app-routing/app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,8 @@ import { MainComponent } from './partials/main/main.component';
     MainComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
