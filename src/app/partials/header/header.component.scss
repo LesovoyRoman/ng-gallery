@@ -1,6 +1,22 @@
 @import "../.././../variables.scss";
 
 header {
-  min-height: 100px;
+  min-height: $header-height;
   background-color: $header-bg;
+  display: flex;
+  align-items: center;
+  nav {
+    width: 100%;
+  }
+
+  ul {
+    width: 100%;
+    li a {
+      color: $header-link-color;
+      text-decoration: none;
+      &.active-link {
+        color: $header-link-color-active;
+      }
+    }
+  }
 }

@@ -9,7 +9,7 @@ import { ApiService } from '../../api.service';
 export class HomeComponent implements OnInit {
 
   isLoading = true;
-  users: any = [];
+  users: Array<object> = [];
 
   constructor(private api: ApiService) { }
 
@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
     this.api.getUsers()
       .subscribe((users: any) => {
         this.users = users;
-        console.log(users)
         this.isLoading = false;
       }, err => {
         console.log(err, 'users error');

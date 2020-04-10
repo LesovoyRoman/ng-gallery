@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, take, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
@@ -8,7 +8,8 @@ const httpOptions = {
 };
 const apiUrl = 'https://jsonplaceholder.typicode.com';
 
-const usersEndpoint = '/users';
+const usersEndpoint = '/users'; // 10
+const imagesEndpoint = '/photos'; // 5000
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,18 @@ export class ApiService {
   getUsers(): Observable<any> {
     return this.http.get(`${apiUrl}${usersEndpoint}`)
       .pipe(
-        tap(users => console.log('users fetched')),
+        tap((users: Array<object>) => console.log('users fetched')),
+        map((users: Array<object>)  => users.slice(0, 10)),
         catchError(this.handleError('get users', []))
+      );
+  }
+
+  getImages(): Observable<any> {
+    return this.http.get(`${apiUrl}${imagesEndpoint}`)
+      .pipe(
+        tap((images: Array<object>) => console.log('images fetched')),
+        map((images: Array<object>)  => images.slice(0, 10)),
+        catchError(this.handleError('get images', []))
       );
   }
 }

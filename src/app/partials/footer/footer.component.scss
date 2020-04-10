@@ -1,0 +1,9 @@
+@import "../../../variables";
+
+footer {
+  background-color: $footer-bg;
+  min-height: $footer-height;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
