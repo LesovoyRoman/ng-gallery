@@ -1,6 +1,11 @@
 @import "variables";
 @import "reset";
 
+body {
+  min-height: 100vh;
+  background-color: $app-bg;
+}
+
 .flexWrap {
   display: flex;
   align-items: center;
@@ -8,6 +13,26 @@
   flex-wrap: wrap;
 }
 
+.content {
+  margin-bottom: $footer-height;
+  padding: $middleSpace;
+}
+
 li {
   list-style: none;
+}
+
+h2, h3 {
+  margin: $middleSpace auto;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 30px;
 }
