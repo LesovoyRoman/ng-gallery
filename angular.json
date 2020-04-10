@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "ng-gallery": {
@@ -24,7 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "sass/styles.scss"
             ],
             "scripts": []
           },
@@ -119,6 +120,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-gallery"
+    }
+  },
+  "defaultProject": "ng-gallery",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
