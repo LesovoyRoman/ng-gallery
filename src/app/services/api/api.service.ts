@@ -42,7 +42,7 @@ export class ApiService {
     return this.http.get(`${apiUrl}${imagesEndpoint}`)
       .pipe(
         tap((images: Array<object>) => console.log('images fetched')),
-        map((images: Array<object>)  => images.slice(0, 10)),
+        map((images: Array<object>)  => images.slice(0, 100)),
         catchError(this.handleError('get images', []))
       );
   }
