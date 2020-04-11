@@ -1,5 +1,7 @@
 <div class="container">
-
+  <div class="image-holder" *ngIf="!isLoading && image">
+    <img [lazyLoad]="image.url" [defaultImage]="image.thumbnailUrl" alt="{{ image.title }}">
+  </div>
   <ngx-spinner
     bdColor="rgba(51,51,51,0.8)"
     size="medium"
