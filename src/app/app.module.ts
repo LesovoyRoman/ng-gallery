@@ -14,6 +14,7 @@ import { NavComponent } from './partials/nav/nav.component';
 import { MainComponent } from './partials/main/main.component';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { GalleryImageComponent } from './pages/gallery-image/gallery-image.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     HeaderComponent,
     FooterComponent,
     NavComponent,
-    MainComponent
+    MainComponent,
+    GalleryImageComponent
   ],
   imports: [
     BrowserModule,

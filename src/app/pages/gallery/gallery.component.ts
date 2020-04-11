@@ -13,6 +13,7 @@ import { ApiImage } from '../../objectTypes/ApiImage';
 export class GalleryComponent implements OnInit {
 
   isLoading = true;
+  $subscription: any;
   images: Array<ApiImage> = [];
   scroll$: Observable<any>;
   defaultImage$: string = 'assets/images/loading.gif';
@@ -28,7 +29,7 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.http.getImages()
+    this.$subscription = this.http.getImages()
       .subscribe((images: Array<ApiImage>) => {
         this.helpers.loaded(this.spinner);
         this.isLoading = false;
@@ -38,5 +39,9 @@ export class GalleryComponent implements OnInit {
         this.isLoading = false;
         this.helpers.loaded(this.spinner);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 }

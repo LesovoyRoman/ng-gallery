@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, take, tap, map } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../../objectTypes/User';
+import { ApiImage } from '../../objectTypes/ApiImage';
 
 const httpOptions = {
   header: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -32,8 +34,8 @@ export class ApiService {
   getUsers(): Observable<any> {
     return this.http.get(`${apiUrl}${usersEndpoint}`)
       .pipe(
-        tap((users: Array<object>) => console.log('users fetched')),
-        map((users: Array<object>)  => users.slice(0, 10)),
+        tap((users: Array<User>) => console.log('users fetched')),
+        map((users: Array<User>) => users.slice(0, 10)),
         catchError(this.handleError('get users', []))
       );
   }
@@ -41,9 +43,17 @@ export class ApiService {
   getImages(): Observable<any> {
     return this.http.get(`${apiUrl}${imagesEndpoint}`)
       .pipe(
-        tap((images: Array<object>) => console.log('images fetched')),
-        map((images: Array<object>)  => images.slice(0, 100)),
+        tap((images: Array<ApiImage>) => console.log('images fetched')),
+        map((images: Array<ApiImage>) => images.slice(0, 100)),
         catchError(this.handleError('get images', []))
+      );
+  }
+
+  getImage(imageId: number) {
+    return this.http.get(`${apiUrl}${imagesEndpoint}/${imageId}`)
+      .pipe(
+        tap((image: ApiImage) => console.log('1 image fetched')),
+        catchError(this.handleError('get 1 image', []))
       );
   }
 }

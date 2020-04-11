@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   isLoading = true;
   users: Array<User> = [];
+  $subscription: any;
 
   constructor(
     private api: ApiService,
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.api.getUsers()
+    this.$subscription = this.api.getUsers()
       .subscribe((users: Array<User>) => {
         this.users = users;
         this.isLoading = false;
@@ -33,5 +34,9 @@ export class HomeComponent implements OnInit {
         this.isLoading = false;
         this.helpers.loaded(this.spinner);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 }

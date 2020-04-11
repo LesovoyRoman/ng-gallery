@@ -2,7 +2,7 @@
   <div *ngIf="!isLoading && images.length">
     <h2>Gallery</h2>
     <ul class="flexWrap listImages">
-      <li *ngFor="let image of images" class="image-thumbnail">
+      <li *ngFor="let image of images" class="image-thumbnail" [routerLink]="['/gallery/photos/' + image.id]">
         <p>{{ image.title }}</p>
         <img [customObservable]="scroll$" [lazyLoad]="image.thumbnailUrl" alt="{{ image.url }}">
       </li>
