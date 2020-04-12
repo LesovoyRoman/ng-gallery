@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { LazyLoadImageModule, scrollPreset } from 'ng-lazyload-image';
@@ -30,6 +31,8 @@ import { GalleryImageComponent } from './pages/gallery-image/gallery-image.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     LazyLoadImageModule.forRoot({
       preset: scrollPreset,

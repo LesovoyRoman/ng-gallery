@@ -26,17 +26,19 @@ export class GalleryImageComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.$subscription = this.http.getImage(this.route.snapshot.params.id)
-      .subscribe((image: ApiImage) => {
-        this.isLoading = false;
-        this.image = image;
-        this.helpers.loaded(this.spinner);
-      }, (err: any) => {
-        console.log(err, 'image error');
-        this.isLoading = false;
-        this.helpers.loaded(this.spinner);
-      });
+    this.$subscription = this.subscribeImage();
   }
+
+  subscribeImage = () => this.http.getImage(this.route.snapshot.params.id)
+    .subscribe((image: ApiImage) => {
+      this.isLoading = false;
+      this.image = image;
+      this.helpers.loaded(this.spinner);
+    }, (err: any) => {
+      console.log(err, 'image error');
+      this.isLoading = false;
+      this.helpers.loaded(this.spinner);
+    });
 
   ngOnDestroy(): void {
     this.$subscription.unsubscribe();

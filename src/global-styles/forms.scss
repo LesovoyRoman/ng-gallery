@@ -1,0 +1,28 @@
+@import "variables";
+
+form {
+  margin: $middleSpace auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 800px;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  label {
+    margin: $middleSpace;
+  }
+  input, textarea {
+    border: $default-border $default-border-color;
+    padding: 6px 12px;
+  }
+  .errors {
+    display: block;
+    span {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: $error-color;
+    }
+  }
+}

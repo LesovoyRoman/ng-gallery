@@ -6,7 +6,7 @@ import { User } from '../../objectTypes/User';
 import { ApiImage } from '../../objectTypes/ApiImage';
 
 const httpOptions = {
-  header: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 const apiUrl = 'https://jsonplaceholder.typicode.com';
 
@@ -37,6 +37,14 @@ export class ApiService {
         tap((users: Array<User>) => console.log('users fetched')),
         map((users: Array<User>) => users.slice(0, 10)),
         catchError(this.handleError('get users', []))
+      );
+  }
+
+  addUser(user: User): Observable<any> {
+    return this.http.post(`${apiUrl}${usersEndpoint}`, user, httpOptions)
+      .pipe(
+        tap((u: User) => console.log(`added user id=${u.id}`)),
+        catchError(this.handleError<User>('add user'))
       );
   }
 
