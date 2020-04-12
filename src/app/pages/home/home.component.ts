@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HelpersService } from '../../services/helpers/helpers.service';
 import { User } from '../../objectTypes/User';
 
@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
   isLoading = true;
   users: Array<User> = [];
   addUserFormTemplate = false;
-  $subscription: any;
+  $subscriptionUsers: any;
+  $subscriptionAddUser: any;
 
   constructor(
     private api: ApiService,
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    this.$subscription = this.subscribeUsers();
+    this.$subscriptionUsers = this.subscribeUsers();
     this.userForm = this.buildForm();
   }
 
@@ -55,18 +56,20 @@ export class HomeComponent implements OnInit {
     if (!this.userForm.valid) {
       return; // @todo error goes
     }
-    this.isLoading = true;
-    this.api.addUser(this.userForm.value)
+    this.spinner.show();
+    this.$subscriptionAddUser = this.api.addUser(this.userForm.value)
       .subscribe((res: User) => {
         console.log(res, 'User')
-        this.isLoading = false;
+        this.$subscriptionAddUser.unsubscribe();
+        this.helpers.loaded(this.spinner);
       }, (err: any) => {
         console.log(err, 'add user');
-        this.isLoading = false;
+        this.$subscriptionAddUser.unsubscribe();
+        this.helpers.loaded(this.spinner);
       });
   }
 
   ngOnDestroy(): void {
-    this.$subscription.unsubscribe();
+    this.$subscriptionUsers.unsubscribe();
   }
 }
