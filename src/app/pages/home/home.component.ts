@@ -12,10 +12,12 @@ import { User } from '../../objectTypes/User';
 })
 export class HomeComponent implements OnInit {
 
-  userForm: FormGroup;
+  addUserForm: FormGroup;
+  editUserForm: FormGroup;
+  userFormTemplate: any = null;
+  formFieldsArray: Array<User> = [];
   isLoading = true;
   users: Array<User> = [];
-  addUserFormTemplate = false;
   $subscriptionUsers: any;
   $subscriptionAddUser: any;
 
@@ -30,10 +32,22 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.$subscriptionUsers = this.subscribeUsers();
-    this.userForm = this.buildForm();
-  }
+    this.addUserForm = this.buildForm();
+  };
 
-  toggleUserForm = () => this.addUserFormTemplate = !this.addUserFormTemplate;
+  buildEditForm = (user: User): void => {
+    this.editUserForm = this.buildForm(user); // Edit user @todo add validation
+  };
+
+  setCurrentForm = (template: FormGroup = null): void => {
+    if (template) {
+      this.userFormTemplate = template;
+      this.formFieldsArray = Object.keys(this.userFormTemplate['controls']);
+    } else {
+      this.userFormTemplate = null;
+      this.formFieldsArray = [];
+    }
+  };
 
   subscribeUsers = () => this.api.getUsers()
     .subscribe((users: Array<User>) => {
@@ -46,20 +60,27 @@ export class HomeComponent implements OnInit {
       this.helpers.loaded(this.spinner);
     });
 
-  buildForm = (): FormGroup => this.formBuilder.group({
-    name: [null, Validators.required],
-    username: [null, Validators.required],
-    email: [null, [Validators.required, Validators.email]],
-  });
+  buildForm = (user: User = undefined): FormGroup => {
+    const objectToBuild =
+      user
+      ? this.helpers.objectSetValuesArrayFormGroup(this.helpers.buildForm(user), {}) // Update existed User
+      : { // Simple form to create User
+        name: [null, Validators.required],
+        username: [null, Validators.required],
+        email: [null, [Validators.required, Validators.email]],
+      };
+
+    return this.formBuilder.group(objectToBuild);
+  };
 
   onFormSubmit() {
-    if (!this.userForm.valid) {
+    if (!this.userFormTemplate.valid) {
       return; // @todo error goes
     }
     this.spinner.show();
-    this.$subscriptionAddUser = this.api.addUser(this.userForm.value)
+    this.$subscriptionAddUser = this.api.addUser(this.userFormTemplate.value)
       .subscribe((res: User) => {
-        console.log(res, 'User')
+        console.log(res, 'User');
         this.$subscriptionAddUser.unsubscribe();
         this.helpers.loaded(this.spinner);
       }, (err: any) => {
@@ -67,9 +88,9 @@ export class HomeComponent implements OnInit {
         this.$subscriptionAddUser.unsubscribe();
         this.helpers.loaded(this.spinner);
       });
-  }
+  };
 
   ngOnDestroy(): void {
     this.$subscriptionUsers.unsubscribe();
-  }
+  };
 }

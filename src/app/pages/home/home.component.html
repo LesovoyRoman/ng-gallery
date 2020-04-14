@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div *ngIf="!addUserFormTemplate">
+  <div *ngIf="!userFormTemplate">
     <div *ngIf="!isLoading && users.length > 0">
       <h2>Users</h2>
       <ul class="flexWrap listUsers">
@@ -15,36 +15,55 @@
     </div>
   </div>
 
-  <div *ngIf="addUserFormTemplate">
-    <h2>Add User</h2>
-    <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
-      <label for="name">
-        <input id="name" type="text" placeholder="Name" formControlName="name">
-        <span class="errors">
-          <span *ngIf="!userForm.get('name').valid && userForm.get('name').touched">Please enter Name</span>
-        </span>
-      </label>
-      <label for="username">
-        <input type="text" id="username" placeholder="Username" formControlName="username">
-        <span class="errors">
-          <span *ngIf="!userForm.get('username').valid && userForm.get('username').touched">Please enter Username</span>
-        </span>
-      </label>
-      <label for="email">
-        <input id="email" type="email" placeholder="Email" formControlName="email">
-        <span class="errors">
-          <span *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Please enter Email</span>
-          <span *ngIf="userForm.get('email').errors && userForm.get('email').errors.email && userForm.get('email').touched">Type email correctly</span>
-        </span>
-      </label>
+<!--  <div *ngIf="userFormTemplate">-->
+<!--    <h2>Add User</h2>-->
+<!--    <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">-->
+<!--      <label for="name">-->
+<!--        <input id="name" type="text" placeholder="Name" formControlName="name">-->
+<!--        <span class="errors">-->
+<!--          <span *ngIf="!userForm.get('name').valid && userForm.get('name').touched">Please enter Name</span>-->
+<!--        </span>-->
+<!--      </label>-->
+<!--      <label for="username">-->
+<!--        <input type="text" id="username" placeholder="Username" formControlName="username">-->
+<!--        <span class="errors">-->
+<!--          <span *ngIf="!userForm.get('username').valid && userForm.get('username').touched">Please enter Username</span>-->
+<!--        </span>-->
+<!--      </label>-->
+<!--      <label for="email">-->
+<!--        <input id="email" type="email" placeholder="Email" formControlName="email">-->
+<!--        <span class="errors">-->
+<!--          <span *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Please enter Email</span>-->
+<!--          <span *ngIf="userForm.get('email').errors && userForm.get('email').errors.email && userForm.get('email').touched">Type email correctly</span>-->
+<!--        </span>-->
+<!--      </label>-->
+
+<!--      <button type="submit">Submit</button>-->
+<!--    </form>-->
+<!--  </div>-->
+
+  <div *ngIf="userFormTemplate">
+    <form [formGroup]="userFormTemplate" (ngSubmit)="onFormSubmit()">
+      <ul>
+        <li *ngFor="let formField of formFieldsArray">
+          <label for="{{ formField }}">
+            <input id="{{ formField }}" type="text" placeholder="{{ formField }}" formControlName="{{ formField }}">
+          </label>
+          <span class="errors">
+            <span *ngIf="!userFormTemplate.get(formField).valid && userFormTemplate.get(formField).touched">
+              Please enter {{ formField }}
+            </span>
+          </span>
+        </li>
+      </ul>
 
       <button type="submit">Submit</button>
     </form>
   </div>
 
   <div class="toggle-form">
-    <button (click)="toggleUserForm()">
-      {{ addUserFormTemplate ? 'All Users' : 'Add User' }}
+    <button (click)="setCurrentForm(userFormTemplate ? null : addUserForm)">
+      {{ userFormTemplate ? 'All Users' : 'Add User' }}
     </button>
   </div>
 
