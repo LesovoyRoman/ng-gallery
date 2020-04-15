@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   addUserForm: FormGroup;
   editUserForm: FormGroup;
   userFormTemplate: any = null;
-  formFieldsArray: Array<User> = [];
+  formFieldsArray: Array<any> = [];
   isLoading = true;
   users: Array<User> = [];
   $subscriptionUsers: any;
