@@ -40,19 +40,12 @@ export class ApiService {
       );
   }
 
-  updateUser(user: User): Observable<any> {
-    return this.http.put(`${apiUrl}${usersEndpoint}`, user, httpOptions)
+  updateUser(user: User, update: boolean): Observable<any> {
+    const type = update ? 'put' : 'post';
+    return this.http[type](`${apiUrl}${usersEndpoint}`, user, httpOptions)
       .pipe(
         tap((u: User) => console.log(`updated user id=${u.id}`)),
         catchError(this.handleError<User>('update user'))
-      );
-  }
-
-  addUser(user: User): Observable<any> {
-    return this.http.post(`${apiUrl}${usersEndpoint}`, user, httpOptions)
-      .pipe(
-        tap((u: User) => console.log(`added user id=${u.id}`)),
-        catchError(this.handleError<User>('add user'))
       );
   }
 

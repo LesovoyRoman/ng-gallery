@@ -4,7 +4,7 @@
     <div *ngIf="!isLoading && users.length > 0">
       <h2>Users</h2>
       <ul class="flexWrap listUsers">
-        <li *ngFor="let user of users">
+        <li *ngFor="let user of users" (click)="buildEditForm(user)">
           <p>{{ user.name }}</p>
           <p>{{ user.email }}</p>
         </li>
@@ -14,33 +14,6 @@
       <h2>Users not found</h2>
     </div>
   </div>
-
-<!--  <div *ngIf="userFormTemplate">-->
-<!--    <h2>Add User</h2>-->
-<!--    <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">-->
-<!--      <label for="name">-->
-<!--        <input id="name" type="text" placeholder="Name" formControlName="name">-->
-<!--        <span class="errors">-->
-<!--          <span *ngIf="!userForm.get('name').valid && userForm.get('name').touched">Please enter Name</span>-->
-<!--        </span>-->
-<!--      </label>-->
-<!--      <label for="username">-->
-<!--        <input type="text" id="username" placeholder="Username" formControlName="username">-->
-<!--        <span class="errors">-->
-<!--          <span *ngIf="!userForm.get('username').valid && userForm.get('username').touched">Please enter Username</span>-->
-<!--        </span>-->
-<!--      </label>-->
-<!--      <label for="email">-->
-<!--        <input id="email" type="email" placeholder="Email" formControlName="email">-->
-<!--        <span class="errors">-->
-<!--          <span *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Please enter Email</span>-->
-<!--          <span *ngIf="userForm.get('email').errors && userForm.get('email').errors.email && userForm.get('email').touched">Type email correctly</span>-->
-<!--        </span>-->
-<!--      </label>-->
-
-<!--      <button type="submit">Submit</button>-->
-<!--    </form>-->
-<!--  </div>-->
 
   <div *ngIf="userFormTemplate">
     <form [formGroup]="userFormTemplate" (ngSubmit)="onFormSubmit()">

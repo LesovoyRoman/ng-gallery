@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   isLoading = true;
   users: Array<User> = [];
   $subscriptionUsers: any;
-  $subscriptionAddUser: any;
+  $subscriptionUser: any;
 
   constructor(
     private api: ApiService,
@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   buildEditForm = (user: User): void => {
     this.editUserForm = this.buildForm(user); // Edit user @todo add validation
+    this.setCurrentForm(this.editUserForm);
   };
 
   setCurrentForm = (template: FormGroup = null): void => {
@@ -78,14 +79,14 @@ export class HomeComponent implements OnInit {
       return; // @todo error goes
     }
     this.spinner.show();
-    this.$subscriptionAddUser = this.api.addUser(this.userFormTemplate.value)
+    this.$subscriptionUser = this.api.updateUser(this.userFormTemplate.value, this.userFormTemplate === this.editUserForm)
       .subscribe((res: User) => {
-        console.log(res, 'User');
-        this.$subscriptionAddUser.unsubscribe();
+        console.log(res, 'User response');
+        this.$subscriptionUser.unsubscribe();
         this.helpers.loaded(this.spinner);
       }, (err: any) => {
-        console.log(err, 'add user');
-        this.$subscriptionAddUser.unsubscribe();
+        console.log(err, 'User error');
+        this.$subscriptionUser.unsubscribe();
         this.helpers.loaded(this.spinner);
       });
   };

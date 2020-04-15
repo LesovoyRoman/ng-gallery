@@ -1,4 +1,22 @@
+@import "../../../global-styles/variables";
+
 .listUsers li {
   width: 30%;
   min-width: 300px;
+  cursor: pointer;
+  transition: $transition-default;
+  padding: 10px 0;
+  margin: $middleSpace auto;
+
+  &:hover {
+    background-color: $shadow-cover-color;
+    p {
+      color: $main-color;
+    }
+  }
+
+  p {
+    font-weight: bold;
+    text-align: center;
+  }
 }
